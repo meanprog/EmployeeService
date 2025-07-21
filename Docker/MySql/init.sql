@@ -1,0 +1,29 @@
+CREATE DATABASE IF NOT EXISTS EmployeeDB;
+
+USE EmployeeDB;
+
+CREATE TABLE IF NOT EXISTS Passports (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Type VARCHAR(50) NOT NULL,
+    Number VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Departments (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    CompanyId INT NOT NULL,
+    Name VARCHAR(100) NOT NULL,
+    Phone VARCHAR(20),
+    CONSTRAINT UQ_Department_CompanyId_Name UNIQUE (CompanyId, Name)
+);
+
+CREATE TABLE IF NOT EXISTS Employees (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Surname VARCHAR(100) NOT NULL,
+    Phone VARCHAR(20),
+    CompanyId INT NOT NULL,
+    DepartmentId INT NOT NULL,
+    PassportId INT NOT NULL,
+    FOREIGN KEY (DepartmentId) REFERENCES Departments(Id),
+    FOREIGN KEY (PassportId) REFERENCES Passports(Id)
+);

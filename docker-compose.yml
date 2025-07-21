@@ -4,9 +4,9 @@
       context: .
       dockerfile: ./EmployeeService/Dockerfile
     ports:
-      - "8080:8080"  
+      - "8080:8080"
     environment:
-      - ASPNETCORE_URLS=http://+:8080 
+      - ASPNETCORE_URLS=http://+:8080
       - ConnectionStrings__DefaultConnection=Server=mysql;Database=EmployeeDB;Uid=root;Pwd=my-secret-pw;
     depends_on:
       mysql:
@@ -18,9 +18,10 @@
       MYSQL_ROOT_PASSWORD: my-secret-pw
       MYSQL_DATABASE: EmployeeDB
     ports:
-      - "3307:3307"
+      - "3307:3307"  
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./Docker/MySql/init.sql:/docker-entrypoint-initdb.d/init.sql  
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
